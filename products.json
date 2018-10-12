@@ -1,0 +1,14 @@
+[
+	{
+		"name": "Product1",
+		"price": 0.20,
+		"currency": "USD",
+		"data": "oHg5SJYRHA0?start=51"
+	},
+	{
+		"name": "CheaperProduct2",
+		"price": 0.05,
+		"currency": "USD",
+		"data": "djV11Xbc914?start=19"
+	}
+]

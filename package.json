@@ -1,0 +1,22 @@
+{
+  "name": "bitbox-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lokiko/BitBox-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lokiko/BitBox-demo/issues"
+  },
+  "homepage": "https://github.com/lokiko/BitBox-demo#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
