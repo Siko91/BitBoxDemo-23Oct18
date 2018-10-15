@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/lokiko/BitBox-demo#readme",
   "dependencies": {
+    "bitbox-sdk": "^2.0.1",
     "express": "^4.16.4"
   }
 }

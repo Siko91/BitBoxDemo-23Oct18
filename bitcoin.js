@@ -1,25 +1,36 @@
 module.exports = { checkIsPaid : checkIsPaid }
 
+const BITBOXSDK = require('bitbox-sdk/lib/bitbox-sdk').default;
+const BITBOX = new BITBOXSDK;
+
+const xpub = 'xpub661MyMwAqRbcGDjqdcZX3HDMnCifGDC9cEGVxGTP8ee5TApDEeeZbqXA4Vf9h9BnsLGawNAPRFmAZYm4pbwAKjD4G2CD9sEJrLKVdfhn8gn'
+
+
 function checkIsPaid(id, price, paidCallback, notPaidCallback) {
+    
+    /// \todo generate unique address based on id
+    var address = BITBOX.Address.fromXPub(xpub);
 
-	/*
-
-	id - string containing productName & clientIP
-	price - in BCH
-	paidCallback - if the product was paid - call with no params
-	notPaidCallback - if the product is not paid, call with 1 param - the BCH address for that payment
-	
-	* - do not wait for the payment in this method.
-	* - it will be called again and again, until the payment is done.
-
-	*/
-
-
-	//Bellow is implementation for debugging. Delete it when coding.
-
-	if ((Math.random() + 0.5) > 1)
-		paidCallback();
-	else
-		notPaidCallback("BCH_Address")
-
+    (async () => {
+        try {
+          var total = 0;
+          var utxo = await BITBOX.Address.utxo([address]);
+          var total=0;
+          for (var i=0; i<utxo[0].length; i++)
+          {
+              total+=utxo[0][i].amount;
+          }
+          if (total<price)
+          {
+              notPaidCallback(address);
+          }
+          else
+          {
+              paidCallback();
+          }
+        } catch(error) {
+          console.error(error)
+        }
+    })()
 }
+
