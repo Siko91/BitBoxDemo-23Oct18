@@ -8,9 +8,10 @@ const xpub = 'xpub661MyMwAqRbcGDjqdcZX3HDMnCifGDC9cEGVxGTP8ee5TApDEeeZbqXA4Vf9h9
 
 function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     
-    /// \todo generate unique address based on id
-    var address = BITBOX.Address.fromXPub(xpub);
-
+    // generates unique address based on id
+    // id is unique for client-product (productName + IP addr)
+    var address = BITBOX.Address.fromXPub(xpub, '0/'+id);
+    
     (async () => {
         try {
           var total = 0;
