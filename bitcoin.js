@@ -10,6 +10,7 @@ function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     
     // generates unique address based on id
     // id is unique for client-product (productName + IP addr)
+    // TODO: hash the 'id' if it is not a valid derivation path string.
     var address = BITBOX.Address.fromXPub(xpub, '0/'+id);
     
     (async () => {
