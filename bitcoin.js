@@ -12,31 +12,27 @@ function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     
     // id is unique for client-product (productName + IP addr)
     
-    var order = orders.find( order => order.id === id );
-    if (typeof order === 'undefined') {
-		order = { id: id, addr_idx: derivation_path_idx };
-		derivation_path_idx++;
-		orders.push(order);
-	}
+    var order = orders.find( order => order.id === id ); if (typeof 
+    order === 'undefined') {
+        order = { id: id, addr_idx: derivation_path_idx };
+        derivation_path_idx++;
+        orders.push(order);
+    }
     var address = BITBOX.Address.fromXPub(xpub, '0/'+order.addr_idx);
     
     (async () => {
         try {
-          var total = 0;
-          var utxo = await BITBOX.Address.utxo([address]);
-          var total=0;
-          for (var i=0; i<utxo[0].length; i++)
-          {
-              total+=utxo[0][i].amount;
-          }
-          if (total<price)
-          {
-              notPaidCallback(address);
-          }
-          else
-          {
-              paidCallback();
-          }
+            var details = await BITBOX.Address.details(address);
+            var total = details.totalReceived;
+            if (details.unconfirmedBalance > 0) {
+                total += details.unconfirmedBalance;
+            }
+            if (total < price) {
+                notPaidCallback(address);
+            }
+            else {
+                paidCallback();
+            }
         } catch(error) {
           console.error(error)
         }
