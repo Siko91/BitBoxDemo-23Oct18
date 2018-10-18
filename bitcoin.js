@@ -13,14 +13,12 @@ function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     // id is unique for client-product (productName + IP addr)
     
     var order = orders.find( order => order.id === id );
-    console.log('order=', order);
     if (typeof order === 'undefined') {
 		order = { id: id, addr_idx: derivation_path_idx };
 		derivation_path_idx++;
 		orders.push(order);
 	}
     var address = BITBOX.Address.fromXPub(xpub, '0/'+order.addr_idx);
-    console.log('derived from ', order.addr_idx);
     
     (async () => {
         try {
