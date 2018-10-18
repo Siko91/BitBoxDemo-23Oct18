@@ -5,13 +5,22 @@ const BITBOX = new BITBOXSDK;
 
 const xpub = 'xpub661MyMwAqRbcGDjqdcZX3HDMnCifGDC9cEGVxGTP8ee5TApDEeeZbqXA4Vf9h9BnsLGawNAPRFmAZYm4pbwAKjD4G2CD9sEJrLKVdfhn8gn'
 
+var derivation_path_idx = 0;
+var orders = [];
 
 function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     
-    // generates unique address based on id
     // id is unique for client-product (productName + IP addr)
-    // TODO: hash the 'id' if it is not a valid derivation path string.
-    var address = BITBOX.Address.fromXPub(xpub, '0/'+id);
+    
+    var order = orders.find( order => order.id === id );
+    console.log('order=', order);
+    if (typeof order === 'undefined') {
+		order = { id: id, addr_idx: derivation_path_idx };
+		derivation_path_idx++;
+		orders.push(order);
+	}
+    var address = BITBOX.Address.fromXPub(xpub, '0/'+order.addr_idx);
+    console.log('derived from ', order.addr_idx);
     
     (async () => {
         try {
