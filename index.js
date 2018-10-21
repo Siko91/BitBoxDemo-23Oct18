@@ -1,3 +1,5 @@
+require("./utils.js");
+
 var express = require('express');
 var fs = require('fs');
 
@@ -27,10 +29,10 @@ products.forEach(p=>{
 		priceConverter.convertFiatToBCH(p.price, p.currency, function convertionCallback(bchPrice) {
 			bitcoin.checkIsPaid(p.name + req.ip, bchPrice,
 				function paidCallback() { 
-					res.send(paid.replace('#data', p.data)) 
+					res.send(paid.replaceAll('#data', p.data)) 
 				},
 				function notPaidCallback(addr) { 
-					res.send(notPaid.replace('#addr', addr).replace('#price', bchPrice)) 
+					res.send(notPaid.replaceAll('#addr', addr).replaceAll('#price', bchPrice)) 
 				}
 			)
 		});
