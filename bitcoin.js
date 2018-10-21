@@ -12,8 +12,8 @@ function checkIsPaid(id, price, paidCallback, notPaidCallback) {
     
     // id is unique for client-product (productName + IP addr)
     
-    var order = orders.find( order => order.id === id ); if (typeof 
-    order === 'undefined') {
+    var order = orders.find( order => order.id === id );
+    if (typeof order === 'undefined') {
         order = { id: id, addr_idx: derivation_path_idx };
         derivation_path_idx++;
         orders.push(order);
